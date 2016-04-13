@@ -1,0 +1,21 @@
+{
+  "name": "heroin-js-librato",
+  "version": "0.0.1",
+  "description": "Librato config as code",
+  "main": "index.js",
+  "scripts": {
+    "test": "tape test/**/*.js",
+    "test:integration": "tape test_integration/**/*.js",
+    "lint": "standard"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "good-guy-http": "1.7.1"
+  },
+  "devDependencies": {
+    "mocha": "2.4.5",
+    "standard": "6.0.8",
+    "tape": "4.5.1"
+  }
+}
