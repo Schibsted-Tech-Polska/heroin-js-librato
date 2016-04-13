@@ -47,5 +47,3 @@ test('should delete all alerts', (t) => {
       throw err
     })
 })
-
-
