@@ -14,7 +14,6 @@
     "good-guy-http": "1.7.1"
   },
   "devDependencies": {
-    "mocha": "2.4.5",
     "standard": "6.0.8",
     "tape": "4.5.1"
   }

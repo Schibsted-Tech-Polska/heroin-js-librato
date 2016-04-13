@@ -1,10 +1,19 @@
 const test = require('tape')
 const configurator = require('../index')(process.env.USERNAME, process.env.PASSWORD)
 
+test('should export all alerts', (t) => {
+  t.plan(1)
+
+  configurator.export().then((result) => {
+    console.log(result)
+    t.ok(result, 'list of alerts not empty')
+  })
+})
+
 test('should create a new alert', (t) => {
   t.plan(1)
 
-  configurator({
+  configurator.create({
     alerts: [{
       'name': 'myapp.status5xx.high',
       'rearm_seconds': 108000,
