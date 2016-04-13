@@ -1,15 +1,6 @@
 const test = require('tape')
 const configurator = require('../index')(process.env.USERNAME, process.env.PASSWORD)
 
-test('should export all alerts', (t) => {
-  t.plan(1)
-
-  configurator.export().then((result) => {
-    console.log(result)
-    t.ok(result, 'list of alerts not empty')
-  })
-})
-
 test('should create a new alert', (t) => {
   t.plan(1)
 
@@ -32,3 +23,29 @@ test('should create a new alert', (t) => {
       t.fail(err)
     })
 })
+
+test('should export all alerts', (t) => {
+  t.plan(1)
+
+  configurator.retrieveAll().then((result) => {
+    t.ok(result, 'list of alerts not empty')
+  })
+})
+
+test('should delete all alerts', (t) => {
+  t.plan(1)
+
+  configurator.deleteAll()
+    .then((results) => {
+      return configurator.retrieveAll()
+    })
+    .then((result) => {
+      t.equal(result.length, 0)
+    })
+    .catch((err) => {
+      console.error(err)
+      throw err
+    })
+})
+
+
