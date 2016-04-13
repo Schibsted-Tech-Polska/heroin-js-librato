@@ -18,4 +18,8 @@ test('should create a new alert', (t) => {
       'version': 2
     }]
   }).then((result) => t.equal(result, 'created'))
+    .catch((err) => {
+      console.error(err)
+      t.fail(err)
+    })
 })
