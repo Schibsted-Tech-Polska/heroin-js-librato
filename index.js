@@ -1,18 +1,29 @@
 const request = require('good-guy-http')({cache: false})
 
+function toRequestOptions (url, body) {
+  return {
+    url,
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: body
+  }
+}
+
 module.exports = function (username, password) {
   return {
     create (config) {
       const url = `https://${username}:${password}@metrics-api.librato.com/v1/alerts`
-      return request({
-        url,
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(config.alerts[0])
-      })
-        .then(() => Promise.resolve('created'), (err) => Promise.reject(err))
+      return Promise.all(
+        config.alerts
+          .map(JSON.stringify)
+          .map(toRequestOptions.bind({}, url))
+          .map((options) => request(options)))
+        .then(
+        (result) => Promise.resolve(`created ${result.length} alerts`),
+        (err) => Promise.reject(err)
+      )
     },
     retrieveAll () {
       const url = `https://${username}:${password}@metrics-api.librato.com/v1/alerts?version=2`
