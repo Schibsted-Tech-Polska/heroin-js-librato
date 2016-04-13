@@ -13,7 +13,13 @@ function toRequestOptions (url, body) {
 
 module.exports = function (username, password) {
   return {
-    create (config) {
+    createOrUpdate (config) {
+      // this.retrieveAll().then((existingAlerts) => {
+      // const updateAlerts = updateAlertsList(config.alerts, existingAlerts)
+      // const deleteAlerts = deleteAlertsList(config.alerts, existingAlerts)
+      // const createAlerts = createAlertsList(config.alerts, existingAlerts)
+      // })
+
       const url = `https://${username}:${password}@metrics-api.librato.com/v1/alerts`
       return Promise.all(
         config.alerts

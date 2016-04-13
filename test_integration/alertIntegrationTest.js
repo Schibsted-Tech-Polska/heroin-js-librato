@@ -4,7 +4,7 @@ const configurator = require('../index')(process.env.USERNAME, process.env.PASSW
 test('should create a new alert', (t) => {
   t.plan(1)
 
-  configurator.create({
+  configurator.createOrUpdate({
     alerts: [{
       'name': 'myapp.status5xx.high',
       'rearm_seconds': 108000,
@@ -24,7 +24,7 @@ test('should create a new alert', (t) => {
     })
 })
 
-function alertConfig (name) {
+function alertConfig (name, threshold) {
   return {
     'name': name,
     'version': 2,
@@ -32,16 +32,16 @@ function alertConfig (name) {
     'conditions': [{
       'type': 'above',
       'metric_name': 'router.status.5xx',
-      'threshold': 1000,
+      'threshold': threshold || 1000,
       'duration': 2000
     }]
   }
 }
 
-test('should batch create or batch update alerts', (t) => {
+test('should batch create alerts', (t) => {
   t.plan(1)
 
-  configurator.create({
+  configurator.createOrUpdate({
     alerts: [
       alertConfig('myapp.test.alert1'),
       alertConfig('myapp.test.alert2')
@@ -53,11 +53,34 @@ test('should batch create or batch update alerts', (t) => {
     })
 })
 
+/*
+test('should batch update alerts', (t) => {
+  t.plan(1)
+
+  configurator.createOrUpdate({
+    alerts: [
+      alertConfig('myapp.test.alert3'),
+      alertConfig('myapp.test.alert4'),
+      alertConfig('myapp.test.alert5'),
+    ]
+  }).then(() => configurator.createOrUpdate({
+    alerts: [
+      alertConfig('myapp.test.alert3', 2000),
+      alertConfig('myapp.test.alert4')
+    ]
+  })).then((result) => t.equal(result, 'updated 1 alerts'))
+    .catch((err) => {
+      console.error(err)
+      t.fail(err)
+    })
+})
+*/
+
 test('should export all alerts', (t) => {
   t.plan(1)
 
   configurator.retrieveAll().then((result) => {
-    console.log(result)
+    // console.log(result)
     t.ok(result, 'list of alerts not empty')
   })
 })
