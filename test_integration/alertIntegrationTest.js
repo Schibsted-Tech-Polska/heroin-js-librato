@@ -19,22 +19,6 @@ function withEmptyAlerts(cb) {
   configurator.deleteAll().then(cb)
 }
 
-test('should delete all alerts', (t) => {
-  t.plan(1)
-
-  configurator.deleteAll()
-    .then((results) => {
-      return configurator.retrieveAll()
-    })
-    .then((result) => {
-      t.equal(result.length, 0)
-    })
-    .catch((err) => {
-      console.error(err)
-      throw err
-    })
-})
-
 withEmptyAlerts(
   test('should create a new alert', (t) => {
     t.plan(1)
@@ -54,11 +38,43 @@ withEmptyAlerts(
       }]
     }).then((result) => t.equal(result, 'modified 1 alerts'))
       .catch((err) => {
-        console.error(err)
+        console.error(err.stack)
         t.fail(err)
       })
   })
 )
+
+test('should delete all alerts', (t) => {
+  t.plan(1)
+
+  configurator.deleteAll()
+    .then((results) => {
+      return configurator.retrieveAll()
+    })
+    .then((result) => {
+      t.equal(result.length, 0)
+    })
+    .catch((err) => {
+      console.error(err)
+      throw err
+    })
+})
+
+//withEmptyAlerts(
+  test('should delete an alert', (t) => {
+    t.plan(1)
+
+    configurator.createOrUpdate({
+      alerts: [alertConfig('myapp.test.alert')]
+    }).then(() => {
+      configurator.createOrUpdate({alerts: []})
+    }).then((result) => t.equal(result, 'modified 1 alerts'))
+      .catch((err) => {
+        console.error(err.stack)
+        t.fail(err)
+      })
+  })
+//)
 
 withEmptyAlerts(
   test('should batch create alerts', (t) => {

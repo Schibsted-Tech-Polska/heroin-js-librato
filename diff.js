@@ -12,6 +12,9 @@ function updated (existingItems, newItems) {
   return newItems.reduce((acc, curr) => {
     var found = existingItems.find((item) => item.name === curr.name)
     if(found) {
+      if(!curr.id && found.id) {
+        curr.id = found.id
+      }
       found = _.pick(found, Object.keys(curr))
     }
     if (found && !_.isEqual(found, curr)) {

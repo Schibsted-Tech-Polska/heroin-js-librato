@@ -25,6 +25,18 @@ test('should return updated item', (t) => {
   })
 })
 
+test('should copy id of the updated item if none exists in a new item', (t) => {
+  t.plan(1)
+  const existing = [{name: 'existing', foo: 'bar', id: '1234'}]
+  const updated = [{name: 'existing', foo: 'baz'}]
+
+  t.deepEqual(diff(existing, updated), {
+    created: [],
+    updated: [{name: 'existing', foo: 'baz', id: '1234'}],
+    deleted: []
+  })
+})
+
 test('should ignore unlisted keys for update', (t) => {
   t.plan(1)
   const existing = [{name: 'existing', foo: 'bar', id: 'ignore me'}]

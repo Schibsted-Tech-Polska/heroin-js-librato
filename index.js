@@ -1,7 +1,7 @@
 const request = require('good-guy-http')({cache: false})
 const diff = require('./diff')
 
-function toCreateRequestOptions (url, body) {
+function toCreateRequestOptions(url, body) {
   return {
     url,
     method: 'POST',
@@ -12,7 +12,7 @@ function toCreateRequestOptions (url, body) {
   }
 }
 
-function toUpdateRequestOptions (url, body) {
+function toUpdateRequestOptions(url, body) {
   return {
     url: `${url}/${body.id}`,
     method: 'PUT',
@@ -23,7 +23,7 @@ function toUpdateRequestOptions (url, body) {
   }
 }
 
-function toDeleteRequestOptions (url, body) {
+function toDeleteRequestOptions(url, body) {
   return {
     url: `${url}/${body.id}`,
     method: 'DELETE'
@@ -33,19 +33,19 @@ function toDeleteRequestOptions (url, body) {
 module.exports = function (username, password) {
   const url = `https://${username}:${password}@metrics-api.librato.com/v1/alerts`
 
-  function createAlerts (created) {
+  function createAlerts(created) {
     return created
       .map(toCreateRequestOptions.bind({}, url))
       .map((options) => request(options))
   }
 
-  function updateAlerts (updated) {
+  function updateAlerts(updated) {
     return updated
       .map(toUpdateRequestOptions.bind({}, url))
       .map((options) => request(options))
   }
 
-  function deleteAlerts (updated) {
+  function deleteAlerts(updated) {
     return updated
       .map(toDeleteRequestOptions.bind({}, url))
       .map((options) => request(options))
@@ -59,11 +59,16 @@ module.exports = function (username, password) {
         const updated = result.updated
         const deleted = result.deleted
 
-        return Promise.all(
-          createAlerts(created).concat(updateAlerts(updated), deleteAlerts(deleted)))
+        var actions = createAlerts(created).concat(updateAlerts(updated), deleteAlerts(deleted));
+
+        return Promise.all(actions)
           .then(
-          (result) => Promise.resolve(`modified ${result.length} alerts`),
-          (err) => Promise.reject(err)
+          (result) => {
+            return Promise.resolve(`modified ${result.length} alerts`)
+          },
+          (err) => {
+            return Promise.reject(err)
+          }
         )
       })
     },
