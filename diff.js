@@ -9,8 +9,13 @@ function diff (existingItems, newItems) {
 }
 
 function updated (existingItems, newItems) {
+
+
   return newItems.reduce((acc, curr) => {
     var found = existingItems.find((item) => item.name === curr.name)
+    if(found) {
+      found = _.pick(found, Object.keys(curr))
+    }
     if (found && !_.isEqual(found, curr)) {
       acc.push(curr)
     }

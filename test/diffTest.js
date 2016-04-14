@@ -25,6 +25,19 @@ test('should return updated item', (t) => {
   })
 })
 
+test('should ignore unlisted keys for update', (t) => {
+  t.plan(1)
+  const existing = [{name: 'existing', foo: 'bar', id: 'ignore me'}]
+  const updated = [{name: 'existing', foo: 'bar'}]
+
+  t.deepEqual(diff(existing, updated), {
+    created: [],
+    updated: [],
+    deleted: []
+  })
+})
+
+
 test('should return deleted item', (t) => {
   t.plan(1)
   const existing = [{name: 'existing', foo: 'bar'}]

@@ -1,7 +1,7 @@
 const test = require('tape')
 const configurator = require('../index')(process.env.USERNAME, process.env.PASSWORD)
 
-function alertConfig (name, threshold) {
+function alertConfig(name, threshold) {
   return {
     'name': name,
     'version': 2,
@@ -69,28 +69,27 @@ test('should batch create alerts', (t) => {
     })
 })
 
-/*
- test('should batch update alerts', (t) => {
- t.plan(1)
+//test('should batch update alerts', (t) => {
+//  t.plan(1)
+//
+//  configurator.createOrUpdate({
+//    alerts: [
+//      alertConfig('myapp.test.alert3'),
+//      alertConfig('myapp.test.alert4'),
+//      alertConfig('myapp.test.alert5'),
+//    ]
+//  }).then(() => configurator.createOrUpdate({
+//    alerts: [
+//      alertConfig('myapp.test.alert3', 2000),
+//      alertConfig('myapp.test.alert4')
+//    ]
+//  })).then((result) => t.equal(result, 'modified 2 alerts'))
+//    .catch((err) => {
+//      console.error(err)
+//      t.fail(err)
+//    })
+//})
 
- configurator.createOrUpdate({
- alerts: [
- alertConfig('myapp.test.alert3'),
- alertConfig('myapp.test.alert4'),
- alertConfig('myapp.test.alert5'),
- ]
- }).then(() => configurator.createOrUpdate({
- alerts: [
- alertConfig('myapp.test.alert3', 2000),
- alertConfig('myapp.test.alert4')
- ]
- })).then((result) => t.equal(result, 'updated 1 alerts'))
- .catch((err) => {
- console.error(err)
- t.fail(err)
- })
- })
- */
 
 test('should export all alerts', (t) => {
   t.plan(1)
