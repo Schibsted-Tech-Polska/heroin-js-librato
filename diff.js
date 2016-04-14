@@ -1,18 +1,36 @@
+const _ = require('lodash')
+
 function diff (existingItems, newItems) {
   return {
-    create: [],
-    update: [],
-    delete: []
+    created: created(existingItems, newItems),
+    updated: updated(existingItems, newItems),
+    deleted: deleted(existingItems, newItems)
   }
 }
 
-function updateAlertsList(existingItems, newItems) {
+function updated (existingItems, newItems) {
+  return newItems.reduce((acc, curr) => {
+    var found = existingItems.find((item) => item.name === curr.name)
+    if (found && !_.isEqual(found, curr)) {
+      acc.push(curr)
+    }
+
+    return acc
+  }, [])
 }
 
-function deleteAlertsList(existingItems, newItems) {
+function deleted (existingItems, newItems) {
+  return []
 }
 
-function createAlertsList(existingItems, newItems) {
-}
+function created (existingItems, newItems) {
+  return newItems.reduce((acc, curr) => {
+    var found = existingItems.find((item) => item.name === curr.name)
+    if (!found) {
+      acc.push(curr)
+    }
 
+    return acc
+  }, [])
+}
 module.exports = diff
