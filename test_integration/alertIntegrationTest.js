@@ -15,6 +15,10 @@ function alertConfig(name, threshold) {
   }
 }
 
+function withEmptyAlerts(cb) {
+  configurator.deleteAll().then(cb)
+}
+
 test('should delete all alerts', (t) => {
   t.plan(1)
 
@@ -31,43 +35,47 @@ test('should delete all alerts', (t) => {
     })
 })
 
-test('should create a new alert', (t) => {
-  t.plan(1)
+withEmptyAlerts(
+  test('should create a new alert', (t) => {
+    t.plan(1)
 
-  configurator.createOrUpdate({
-    alerts: [{
-      'name': 'myapp.status5xx.high',
-      'rearm_seconds': 108000,
-      'conditions': [{
-        'type': 'above',
-        'metric_name': 'router.status.5xx',
-        'summary_function': 'sum',
-        'threshold': 40,
-        'duration': 600
-      }],
-      'version': 2
-    }]
-  }).then((result) => t.equal(result, 'modified 1 alerts'))
-    .catch((err) => {
-      console.error(err)
-      t.fail(err)
-    })
-})
+    configurator.createOrUpdate({
+      alerts: [{
+        'name': 'myapp.status5xx.high',
+        'rearm_seconds': 108000,
+        'conditions': [{
+          'type': 'above',
+          'metric_name': 'router.status.5xx',
+          'summary_function': 'sum',
+          'threshold': 40,
+          'duration': 600
+        }],
+        'version': 2
+      }]
+    }).then((result) => t.equal(result, 'modified 1 alerts'))
+      .catch((err) => {
+        console.error(err)
+        t.fail(err)
+      })
+  })
+)
 
-test('should batch create alerts', (t) => {
-  t.plan(1)
+withEmptyAlerts(
+  test('should batch create alerts', (t) => {
+    t.plan(1)
 
-  configurator.createOrUpdate({
-    alerts: [
-      alertConfig('myapp.test.alert1'),
-      alertConfig('myapp.test.alert2')
-    ]
-  }).then((result) => t.equal(result, 'modified 3 alerts'))
-    .catch((err) => {
-      console.error(err)
-      t.fail(err)
-    })
-})
+    configurator.createOrUpdate({
+      alerts: [
+        alertConfig('myapp.test.alert1'),
+        alertConfig('myapp.test.alert2')
+      ]
+    }).then((result) => t.equal(result, 'modified 3 alerts'))
+      .catch((err) => {
+        console.error(err)
+        t.fail(err)
+      })
+  })
+)
 
 //test('should batch update alerts', (t) => {
 //  t.plan(1)

@@ -9,8 +9,6 @@ function diff (existingItems, newItems) {
 }
 
 function updated (existingItems, newItems) {
-
-
   return newItems.reduce((acc, curr) => {
     var found = existingItems.find((item) => item.name === curr.name)
     if(found) {
