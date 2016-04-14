@@ -1,3 +1,5 @@
 [*.js]
 indent_style = space
 indent_size = 2
+spaces_around_brackets = outside
+insert_final_newline = true

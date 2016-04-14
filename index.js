@@ -1,35 +1,71 @@
 const request = require('good-guy-http')({cache: false})
+const diff = require('./diff')
 
-function toRequestOptions (url, body) {
+function toCreateRequestOptions (url, body) {
   return {
     url,
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: body
+    body: JSON.stringify(body)
+  }
+}
+
+function toUpdateRequestOptions (url, body) {
+  return {
+    url: `${url}/${body.id}`,
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(body)
+  }
+}
+
+function toDeleteRequestOptions (url, body) {
+  return {
+    url: `${url}/${body.id}`,
+    method: 'DELETE'
   }
 }
 
 module.exports = function (username, password) {
+  const url = `https://${username}:${password}@metrics-api.librato.com/v1/alerts`
+
+  function createAlerts (created) {
+    return created
+      .map(toCreateRequestOptions.bind({}, url))
+      .map((options) => request(options))
+  }
+
+  function updateAlerts (updated) {
+    return updated
+      .map(toUpdateRequestOptions.bind({}, url))
+      .map((options) => request(options))
+  }
+
+  function deleteAlerts (updated) {
+    return updated
+      .map(toDeleteRequestOptions.bind({}, url))
+      .map((options) => request(options))
+  }
+
   return {
     createOrUpdate (config) {
-      // this.retrieveAll().then((existingAlerts) => {
-      // const updateAlerts = updateAlertsList(config.alerts, existingAlerts)
-      // const deleteAlerts = deleteAlertsList(config.alerts, existingAlerts)
-      // const createAlerts = createAlertsList(config.alerts, existingAlerts)
-      // })
+      return this.retrieveAll().then((existingAlerts) => {
+        const result = diff(existingAlerts, config.alerts)
+        const created = result.created
+        const updated = result.updated
+        const deleted = result.deleted
 
-      const url = `https://${username}:${password}@metrics-api.librato.com/v1/alerts`
-      return Promise.all(
-        config.alerts
-          .map(JSON.stringify)
-          .map(toRequestOptions.bind({}, url))
-          .map((options) => request(options)))
-        .then(
-        (result) => Promise.resolve(`created ${result.length} alerts`),
-        (err) => Promise.reject(err)
-      )
+        return Promise.all(
+          createAlerts(created).concat(updateAlerts(updated), deleteAlerts(deleted)))
+          .then(
+          (result) => Promise.resolve(`modified ${result.length} alerts`),
+          (err) => Promise.reject(err)
+        )
+      })
     },
     retrieveAll () {
       const url = `https://${username}:${password}@metrics-api.librato.com/v1/alerts?version=2`
