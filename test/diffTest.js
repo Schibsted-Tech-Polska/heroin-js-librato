@@ -4,9 +4,13 @@ const diff = require('../diff')
 test('should return created item', (t) => {
   t.plan(1)
   const existing = []
-  const updated = [{foo: 'bar'}]
+  const created = [{name: 'created', foo: 'bar'}]
 
-  t.deepEqual(diff(existing, updated).created, [{'foo': 'bar'}])
+  t.deepEqual(diff(existing, created), {
+    created: [{name: 'created', foo: 'bar'}],
+    updated: [],
+    deleted: []
+  })
 })
 
 test('should return updated item', (t) => {
