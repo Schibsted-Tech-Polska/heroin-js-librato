@@ -20,3 +20,16 @@ test('should return updated item', (t) => {
     deleted: []
   })
 })
+
+test('should return deleted item', (t) => {
+  t.plan(1)
+  const existing = [{name: 'existing', foo: 'bar'}]
+  const updated = []
+
+  t.deepEqual(diff(existing, updated), {
+    created: [],
+    updated: [],
+    deleted: [{name: 'existing', foo: 'bar'}]
+  })
+})
+

@@ -20,7 +20,7 @@ function updated (existingItems, newItems) {
 }
 
 function deleted (existingItems, newItems) {
-  return []
+  return created(newItems, existingItems)
 }
 
 function created (existingItems, newItems) {
@@ -33,4 +33,5 @@ function created (existingItems, newItems) {
     return acc
   }, [])
 }
+
 module.exports = diff
