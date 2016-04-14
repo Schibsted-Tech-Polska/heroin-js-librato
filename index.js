@@ -64,9 +64,9 @@ module.exports = function (username, password) {
         return Promise.all(actions)
           .then(
           (result) => {
-            return Promise.resolve(`modified ${result.length} alerts`)
-          },
-          (err) => {
+            return `modified ${result.length} alerts`
+          }
+        ).catch((err) => {
             return Promise.reject(err)
           }
         )
