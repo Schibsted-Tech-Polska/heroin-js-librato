@@ -37,3 +37,15 @@ test('should return deleted item', (t) => {
   })
 })
 
+test('should return modification in comprehensive diff', (t) => {
+  t.plan(1)
+  const existing = [{name: 'existing', foo: 'bar'}, {name: 'update', foo: 'baz'}, {name: 'delete', foo: 'bay'}]
+  const updated = [{name: 'existing', foo: 'bar'}, {name: 'update', foo: 'bar', fizz: 'buzz'}, {name: 'created', foo: 'bay'}]
+
+  t.deepEqual(diff(existing, updated), {
+    created: [{name: 'created', foo: 'bay'}],
+    updated: [{name: 'update', foo: 'bar', fizz: 'buzz'}],
+    deleted: [{name: 'delete', foo: 'bay'}]
+  })
+})
+
