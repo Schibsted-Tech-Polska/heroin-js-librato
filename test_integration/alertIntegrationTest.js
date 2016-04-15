@@ -23,12 +23,12 @@ test('should delete all alerts', (t) => {
   t.plan(1)
 
   configurator.deleteAll()
-    .then(() => configurator.retrieveAll())
+    .then(() => configurator.fetchAllAlerts())
     .then((result) => {
       t.equal(result.length, 0)
     })
     .catch((err) => {
-      console.error(err)
+      console.error(err.stack)
       throw err
     })
 })
@@ -121,7 +121,7 @@ withEmptyAlerts(
 test('should export all alerts', (t) => {
   t.plan(1)
 
-  configurator.retrieveAll().then((result) => {
+  configurator.fetchAllAlerts().then((result) => {
     // console.log(result)
     t.ok(result, 'list of alerts not empty')
   })

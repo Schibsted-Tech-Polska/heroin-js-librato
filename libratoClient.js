@@ -54,29 +54,24 @@ module.exports = function (username, password, httpClient) {
       .map((options) => httpClient(options))
   }
 
-  function retrieveAll() {
-    return httpClient(retrieveEndpoint).then((result) => {
-      return JSON.parse(result.body).alerts
-    })
+  function fetchAllAlerts() {
+    return httpClient(retrieveEndpoint)
   }
 
-  function deleteAll() {
-    return retrieveAll().
-      then((alerts) => {
-        const alertIds = alerts.map((alert) => alert.id)
-        const deleteRequests = alertIds
-          .map(alertEndpoint)
-          .map((url) => {
-            return httpClient({
-              url,
-              method: 'DELETE'
-            })
-          })
-        return Promise.all(deleteRequests)
+  function deleteAll(alerts) {
+    const alertIds = alerts.map((alert) => alert.id)
+    const deleteRequests = alertIds
+      .map(alertEndpoint)
+      .map((url) => {
+        return httpClient({
+          url,
+          method: 'DELETE'
+        })
       })
+    return Promise.all(deleteRequests)
   }
 
   return {
-    createAlerts, updateAlerts, deleteAlerts, retrieveAll, deleteAll
+    createAlerts, updateAlerts, deleteAlerts, fetchAllAlerts, deleteAll
   }
 }

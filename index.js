@@ -6,7 +6,7 @@ module.exports = function (username, password, options) {
 
   return {
     createOrUpdate (config) {
-      return this.retrieveAll().then((existingAlerts) => {
+      return this.fetchAllAlerts().then((existingAlerts) => {
         const result = diff(existingAlerts, config.alerts)
         const created = result.created
         const updated = result.updated
@@ -25,11 +25,13 @@ module.exports = function (username, password, options) {
         )
       })
     },
-    retrieveAll () {
-      return librato.retrieveAll()
+    fetchAllAlerts () {
+      return librato.fetchAllAlerts().then((result) => {
+        return JSON.parse(result.body).alerts
+      })
     },
     deleteAll () {
-      return librato.deleteAll()
+      return this.fetchAllAlerts().then(librato.deleteAll)
     }
   }
 }

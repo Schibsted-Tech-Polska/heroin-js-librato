@@ -37,3 +37,9 @@ test('should construct correct delete alert request', (t) => {
     url: 'https://username:password@metrics-api.librato.com/v1/alerts/1234'
   }])
 })
+
+test('should construct correct fetch all alerts request', (t) => {
+  t.plan(1)
+
+  t.deepEqual(libratoClient.fetchAllAlerts(), 'https://username:password@metrics-api.librato.com/v1/alerts?version=2')
+})
