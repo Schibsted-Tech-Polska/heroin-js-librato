@@ -8,7 +8,6 @@ libratoConfigurator.createOrUpdate({
   "alerts": [
     {
       "name": "myapp.test.alert4",
-      "description": null,
       "conditions": [
         {
           "type": "above",
@@ -18,8 +17,6 @@ libratoConfigurator.createOrUpdate({
           "duration": 2000
         }
       ],
-      "services": [],
-      "attributes": null,
       "active": true,
       "version": 2,
       "rearm_seconds": 120,
@@ -45,4 +42,4 @@ libratoConfigurator.createOrUpdate({
       "rearm_per_signal": false
     }
   ]
-}).then((result) => console.log(result)).catch((err) => console.error(err.stack));
+}).then((result) => console.log(result)).catch((err) => console.error(err));
