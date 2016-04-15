@@ -1,4 +1,5 @@
 const _ = require('lodash')
+const isSubset = require('is-subset')
 
 function diff (existingItems, newItems) {
   return {
@@ -17,7 +18,7 @@ function updated (existingItems, newItems) {
       }
       found = _.pick(found, Object.keys(curr))
     }
-    if (found && !_.isEqual(found, curr)) {
+    if (found && !isSubset(found, curr)) {
       acc.push(curr)
     }
 

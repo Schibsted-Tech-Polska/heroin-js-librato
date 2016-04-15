@@ -12,6 +12,7 @@
   "license": "MIT",
   "dependencies": {
     "good-guy-http": "1.7.1",
+    "is-subset": "0.1.1",
     "lodash": "4.11.1"
   },
   "devDependencies": {

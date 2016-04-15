@@ -95,26 +95,29 @@ withEmptyAlerts(
   })
 )
 
-//test('should batch update alerts', (t) => {
-//  t.plan(1)
-//
-//  configurator.createOrUpdate({
-//    alerts: [
-//      alertConfig('myapp.test.alert3'),
-//      alertConfig('myapp.test.alert4'),
-//      alertConfig('myapp.test.alert5'),
-//    ]
-//  }).then(() => configurator.createOrUpdate({
-//    alerts: [
-//      alertConfig('myapp.test.alert3', 2000),
-//      alertConfig('myapp.test.alert4')
-//    ]
-//  })).then((result) => t.equal(result, 'modified 2 alerts'))
-//    .catch((err) => {
-//      console.error(err)
-//      t.fail(err)
-//    })
-//})
+withEmptyAlerts(
+  test('should batch update alerts', (t) => {
+    t.plan(1)
+
+    configurator.createOrUpdate({
+      alerts: [
+        alertConfig('myapp.test.alert3'),
+        alertConfig('myapp.test.alert4'),
+        alertConfig('myapp.test.alert5'),
+      ]
+    }).then(() => configurator.createOrUpdate({
+      alerts: [
+        alertConfig('myapp.test.alert3', 2000),
+        alertConfig('myapp.test.alert4')
+      ]
+    })).then((result) => t.equal(result, 'modified 2 alerts'))
+      .catch((err) => {
+        console.error(err)
+        t.fail(err)
+      })
+  })
+
+)
 
 
 test('should export all alerts', (t) => {

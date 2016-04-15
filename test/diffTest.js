@@ -49,6 +49,17 @@ test('should ignore unlisted keys for update', (t) => {
   })
 })
 
+test('should ignore unlisted nested keys for update', (t) => {
+  t.plan(1)
+  const existing = [{name: 'existing', foo: {bar: 'baz'}}]
+  const updated = [{name: 'existing', foo: {}}]
+
+  t.deepEqual(diff(existing, updated), {
+    created: [],
+    updated: [],
+    deleted: []
+  })
+})
 
 test('should return deleted item', (t) => {
   t.plan(1)
@@ -65,7 +76,10 @@ test('should return deleted item', (t) => {
 test('should return modification in comprehensive diff', (t) => {
   t.plan(1)
   const existing = [{name: 'existing', foo: 'bar'}, {name: 'update', foo: 'baz'}, {name: 'delete', foo: 'bay'}]
-  const updated = [{name: 'existing', foo: 'bar'}, {name: 'update', foo: 'bar', fizz: 'buzz'}, {name: 'created', foo: 'bay'}]
+  const updated = [{name: 'existing', foo: 'bar'}, {name: 'update', foo: 'bar', fizz: 'buzz'}, {
+    name: 'created',
+    foo: 'bay'
+  }]
 
   t.deepEqual(diff(existing, updated), {
     created: [{name: 'created', foo: 'bay'}],
