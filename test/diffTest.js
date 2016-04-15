@@ -1,5 +1,5 @@
 const test = require('tape')
-const diff = require('../diff')
+const diff = require('../lib/diff')
 
 test('should return created item', (t) => {
   t.plan(1)

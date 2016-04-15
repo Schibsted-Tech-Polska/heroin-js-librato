@@ -1,6 +1,6 @@
 const test = require('tape')
 const httpClient = (options) => options
-const libratoClient = require('../libratoClient')('username', 'password', httpClient)
+const libratoClient = require('../lib/libratoClient')('username', 'password', httpClient)
 
 var body = {
   name: 'production.web.frontend.response_time',
