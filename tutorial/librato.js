@@ -1,8 +1,8 @@
 const libratoConfigurator = require('../index')(process.env.USERNAME, process.env.PASSWORD)
 
-// libratoConfigurator.export().then((result) => console.log(result))
+libratoConfigurator.export().then((result) => console.log(result))
 
-// libratoConfigurator.deleteAllAlerts().then((result) => console.log(result))
+libratoConfigurator.deleteAllAlerts().then((result) => console.log(result))
 
 libratoConfigurator.createOrUpdate({
   'alerts': [

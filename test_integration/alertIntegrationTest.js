@@ -28,8 +28,8 @@ test('should delete all alerts', (t) => {
         t.equal(result.length, 0)
       })
       .catch((err) => {
-        console.error(err.stack)
-        throw err
+        console.error(err)
+        t.fail(err)
       })
 })
 
