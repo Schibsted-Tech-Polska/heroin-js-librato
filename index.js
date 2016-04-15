@@ -30,8 +30,8 @@ module.exports = function (username, password, options) {
         return JSON.parse(result.body).alerts
       })
     },
-    deleteAll () {
-      return this.fetchAllAlerts().then(librato.deleteAll)
+    deleteAllAlerts () {
+      return this.fetchAllAlerts().then((alerts) => Promise.all(librato.deleteAlerts(alerts)))
     }
   }
 }

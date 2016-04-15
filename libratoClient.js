@@ -58,20 +58,7 @@ module.exports = function (username, password, httpClient) {
     return httpClient(retrieveEndpoint)
   }
 
-  function deleteAll(alerts) {
-    const alertIds = alerts.map((alert) => alert.id)
-    const deleteRequests = alertIds
-      .map(alertEndpoint)
-      .map((url) => {
-        return httpClient({
-          url,
-          method: 'DELETE'
-        })
-      })
-    return Promise.all(deleteRequests)
-  }
-
   return {
-    createAlerts, updateAlerts, deleteAlerts, fetchAllAlerts, deleteAll
+    createAlerts, updateAlerts, deleteAlerts, fetchAllAlerts
   }
 }

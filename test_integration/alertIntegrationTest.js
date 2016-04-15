@@ -16,13 +16,13 @@ function alertConfig(name, threshold) {
 }
 
 function withEmptyAlerts(cb) {
-  configurator.deleteAll().then(cb)
+  configurator.deleteAllAlerts().then(cb)
 }
 
 test('should delete all alerts', (t) => {
   t.plan(1)
 
-  configurator.deleteAll()
+  configurator.deleteAllAlerts()
     .then(() => configurator.fetchAllAlerts())
     .then((result) => {
       t.equal(result.length, 0)
@@ -114,9 +114,7 @@ withEmptyAlerts(
         t.fail(err)
       })
   })
-
 )
-
 
 test('should export all alerts', (t) => {
   t.plan(1)
