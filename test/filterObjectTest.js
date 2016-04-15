@@ -10,5 +10,9 @@ test('should filter out nested key', (t) => {
 test('should filter out nested keys', (t) => {
   t.plan(1)
 
-  t.deepEqual(filterObject({id: 'remove', created: 'remove', nested: {id: 'remove', created: 'remove'}}, ['id', 'created']), {nested: {}})
+  t.deepEqual(filterObject({
+    id: 'remove',
+    created: 'remove',
+    nested: {id: 'remove', created: 'remove'}
+  }, [ 'id', 'created' ]), {nested: {}})
 })
