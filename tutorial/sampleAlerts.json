@@ -1,0 +1,48 @@
+[
+  {
+    "id": 6313552,
+    "name": "myapp.test.alert4",
+    "description": null,
+    "conditions": [
+      {
+        "id": 4457387,
+        "type": "above",
+        "metric_name": "router.status.5xx",
+        "source": null,
+        "threshold": 1000,
+        "duration": 2000
+      }
+    ],
+    "services": [],
+    "attributes": null,
+    "active": true,
+    "created_at": 1460718313,
+    "updated_at": 1460718313,
+    "version": 2,
+    "rearm_seconds": 120,
+    "rearm_per_signal": false
+  },
+  {
+    "id": 6313551,
+    "name": "myapp.test.alert3",
+    "description": null,
+    "conditions": [
+      {
+        "id": 4457389,
+        "type": "above",
+        "metric_name": "router.status.5xx",
+        "source": null,
+        "threshold": 2000,
+        "duration": 2000
+      }
+    ],
+    "services": [],
+    "attributes": null,
+    "active": true,
+    "created_at": 1460718313,
+    "updated_at": 1460718314,
+    "version": 2,
+    "rearm_seconds": 120,
+    "rearm_per_signal": false
+  }
+]
