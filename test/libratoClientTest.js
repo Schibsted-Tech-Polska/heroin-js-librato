@@ -3,7 +3,8 @@ const httpClient = (options) => options
 const libratoClient = require('../libratoClient')('username', 'password', httpClient)
 
 var body = {
-  name: 'production.web.frontend.response_time'
+  name: 'production.web.frontend.response_time',
+  id: '1234'
 }
 
 test('should construct correct create alert request', (t) => {
@@ -14,5 +15,16 @@ test('should construct correct create alert request', (t) => {
     headers: {'Content-Type': 'application/json'},
     method: 'POST',
     url: 'https://username:password@metrics-api.librato.com/v1/alerts'
+  }])
+})
+
+test('should construct correct update alert request', (t) => {
+  t.plan(1)
+
+  t.deepEqual(libratoClient.updateAlerts([body]), [{
+    body: JSON.stringify(body),
+    headers: {'Content-Type': 'application/json'},
+    method: 'PUT',
+    url: 'https://username:password@metrics-api.librato.com/v1/alerts/1234'
   }])
 })
