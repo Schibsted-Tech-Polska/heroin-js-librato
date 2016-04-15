@@ -1,7 +1,8 @@
 const diff = require('./diff')
+var request = require('good-guy-http')({cache: false})
 
 module.exports = function (username, password, options) {
-  const librato = require('./libratoClient')(username, password)
+  const librato = require('./libratoClient')(username, password, request)
 
   return {
     createOrUpdate (config) {

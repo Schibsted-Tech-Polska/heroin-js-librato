@@ -1,5 +1,3 @@
-const request = require('good-guy-http')({cache: false})
-
 function toCreateRequestOptions(url, body) {
   return {
     url,
@@ -29,30 +27,35 @@ function toDeleteRequestOptions(url, body) {
   }
 }
 
-module.exports = function (username, password) {
+module.exports = function (username, password, httpClient) {
+
   const changeEndpoint = `https://${username}:${password}@metrics-api.librato.com/v1/alerts`
+  const retrieveEndpoint = `https://${username}:${password}@metrics-api.librato.com/v1/alerts?version=2`
+
+  function alertEndpoint(id) {
+    return `https://${username}:${password}@metrics-api.librato.com/v1/alerts/${id}`
+  }
 
   function createAlerts(created) {
     return created
       .map(toCreateRequestOptions.bind({}, changeEndpoint))
-      .map((options) => request(options))
+      .map((options) => httpClient(options))
   }
 
   function updateAlerts(updated) {
     return updated
       .map(toUpdateRequestOptions.bind({}, changeEndpoint))
-      .map((options) => request(options))
+      .map((options) => httpClient(options))
   }
 
   function deleteAlerts(updated) {
     return updated
       .map(toDeleteRequestOptions.bind({}, changeEndpoint))
-      .map((options) => request(options))
+      .map((options) => httpClient(options))
   }
 
   function retrieveAll() {
-    const retrieveEndpoint = `https://${username}:${password}@metrics-api.librato.com/v1/alerts?version=2`
-    return request(retrieveEndpoint).then((result) => {
+    return httpClient(retrieveEndpoint).then((result) => {
       return JSON.parse(result.body).alerts
     })
   }
@@ -62,9 +65,9 @@ module.exports = function (username, password) {
       then((alerts) => {
         const alertIds = alerts.map((alert) => alert.id)
         const deleteRequests = alertIds
-          .map((id) => `https://${username}:${password}@metrics-api.librato.com/v1/alerts/${id}`)
+          .map(alertEndpoint)
           .map((url) => {
-            return request({
+            return httpClient({
               url,
               method: 'DELETE'
             })
@@ -72,7 +75,6 @@ module.exports = function (username, password) {
         return Promise.all(deleteRequests)
       })
   }
-
 
   return {
     createAlerts, updateAlerts, deleteAlerts, retrieveAll, deleteAll
