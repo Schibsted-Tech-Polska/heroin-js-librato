@@ -28,3 +28,12 @@ test('should construct correct update alert request', (t) => {
     url: 'https://username:password@metrics-api.librato.com/v1/alerts/1234'
   }])
 })
+
+test('should construct correct delete alert request', (t) => {
+  t.plan(1)
+
+  t.deepEqual(libratoClient.deleteAlerts([body]), [{
+    method: 'DELETE',
+    url: 'https://username:password@metrics-api.librato.com/v1/alerts/1234'
+  }])
+})
