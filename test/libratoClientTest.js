@@ -1,12 +1,18 @@
 const test = require('tape')
-const libratoClient = require('../libratoClient')('username', 'password')
+const httpClient = (options) => options
+const libratoClient = require('../libratoClient')('username', 'password', httpClient)
 
-//test('should construct correct create alert request', (t) => {
-//  t.plan(1)
-//
-//  t.deepEqual(diff(existing, created), {
-//    created: [{name: 'created', foo: 'bar'}],
-//    updated: [],
-//    deleted: []
-//  })
-//})
+var body = {
+  name: 'production.web.frontend.response_time'
+}
+
+test('should construct correct create alert request', (t) => {
+  t.plan(1)
+
+  t.deepEqual(libratoClient.createAlerts([body]), [{
+    body: JSON.stringify(body),
+    headers: {'Content-Type': 'application/json'},
+    method: 'POST',
+    url: 'https://username:password@metrics-api.librato.com/v1/alerts'
+  }])
+})
