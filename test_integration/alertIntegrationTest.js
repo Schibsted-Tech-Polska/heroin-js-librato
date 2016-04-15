@@ -23,9 +23,7 @@ test('should delete all alerts', (t) => {
   t.plan(1)
 
   configurator.deleteAll()
-    .then((results) => {
-      return configurator.retrieveAll()
-    })
+    .then(() => configurator.retrieveAll())
     .then((result) => {
       t.equal(result.length, 0)
     })
