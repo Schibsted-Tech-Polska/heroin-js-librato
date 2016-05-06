@@ -1,5 +1,5 @@
 const test = require('tape')
-const configurator = require('../index')(process.env.USERNAME, process.env.PASSWORD)
+const configurator = require('../index').client(process.env.USERNAME, process.env.PASSWORD)
 
 function alertConfig (name, threshold) {
   return {

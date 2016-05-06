@@ -1,4 +1,4 @@
-const libratoConfigurator = require('../index')(process.env.USERNAME, process.env.PASSWORD)
+const libratoConfigurator = require('../index').client(process.env.USERNAME, process.env.PASSWORD)
 
 libratoConfigurator.export().then((result) => console.log(result))
 
