@@ -8,7 +8,7 @@
     "test:integration": "tape test_integration/**/*.js",
     "lint": "standard"
   },
-  "author": "",
+  "author": "Mateusz Kwasniewski <mateusz.kwasniewski@schibsted.pl>",
   "license": "MIT",
   "dependencies": {
     "good-guy-http": "1.7.1",
