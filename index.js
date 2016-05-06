@@ -10,11 +10,11 @@ var plugin = {
   librato: {
     alerts: {
       configure: function (config, configVars) {
-        var librato = client(configVars.LIBRATO_TOKEN, configVars.LIBRATO_PASSWORD)
+        var librato = client(configVars.LIBRATO_USER, configVars.LIBRATO_PASSWORD)
         return librato.createOrUpdate(config)
       },
       export: function (configVars) {
-        var librato = client(configVars.LIBRATO_TOKEN, configVars.LIBRATO_PASSWORD)
+        var librato = client(configVars.LIBRATO_USER, configVars.LIBRATO_PASSWORD)
         return librato.export()
       }
     }
