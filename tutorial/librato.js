@@ -2,8 +2,7 @@ const libratoConfigurator = require('../index')(process.env.USERNAME, process.en
 
 libratoConfigurator.export().then((result) => console.log(result))
 
-libratoConfigurator.deleteAllAlerts().then((result) => console.log(result))
-
+// libratoConfigurator.deleteAllAlerts().then((result) => console.log(result))
 libratoConfigurator.createOrUpdate({
   'alerts': [
     {
@@ -19,7 +18,6 @@ libratoConfigurator.createOrUpdate({
         }
       ],
       'services': [],
-      'attributes': null,
       'active': true,
       'version': 2,
       'rearm_seconds': 120,
@@ -38,7 +36,6 @@ libratoConfigurator.createOrUpdate({
         }
       ],
       'services': [],
-      'attributes': {},
       'active': true,
       'version': 2,
       'rearm_seconds': 120,
