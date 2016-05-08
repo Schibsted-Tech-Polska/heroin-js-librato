@@ -1,7 +1,7 @@
 const app = require('./lib/app')
 const request = require('good-guy-http')({cache: false})
 
-function client(username, token) {
+function client (username, token) {
   const librato = require('./lib/libratoClient')(username, token, request)
   return app(librato)
 }
