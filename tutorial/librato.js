@@ -17,7 +17,11 @@ libratoConfigurator.createOrUpdate(
           'duration': 2000
         }
       ],
-      'services': [],
+      services: [{
+        type: 'slack',
+        settings: {url: 'https://hooks.slack.com/services/xyz'},
+        title: 'Slack notification'
+      }],
       'active': true,
       'version': 2,
       'rearm_seconds': 120,
