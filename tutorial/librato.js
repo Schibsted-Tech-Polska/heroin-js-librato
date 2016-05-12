@@ -3,8 +3,8 @@ const libratoConfigurator = require('../index').client(process.env.USERNAME, pro
 libratoConfigurator.export().then((result) => console.log(result))
 
 // libratoConfigurator.deleteAllAlerts().then((result) => console.log(result))
-libratoConfigurator.createOrUpdate({
-  'alerts': [
+libratoConfigurator.createOrUpdate(
+  [
     {
       'name': 'myapp.test.alert4',
       'description': null,
@@ -42,6 +42,6 @@ libratoConfigurator.createOrUpdate({
       'rearm_per_signal': false
     }
   ]
-})
+)
   .then((result) => console.log(result))
   .catch((err) => console.error(err))
