@@ -29,12 +29,12 @@ const updatedServicesConfig = [ {
   },
   title: 'Camfire notification'
 } ]
-const newAlertsConfig1 = [ {
+const alertsWithNewServices = [ {
   name: 'myapp.test.alert1',
   id: 123,
   services: newServicesConfig
 } ]
-const newAlertsConfig2 = [ {
+const alertsWithUpdatedServices = [ {
   name: 'myapp.test.alert1',
   id: 123,
   services: updatedServicesConfig
@@ -57,7 +57,7 @@ test('should create a corresponding notification service when it does not exist'
     return []
   }
 
-  app(fakeLibratoClient).createOrUpdate(newAlertsConfig1).catch(t.fail)
+  app(fakeLibratoClient).createOrUpdate(alertsWithNewServices).catch(t.fail)
 })
 
 test('should update a corresponding notification service when it does exist', (t) => {
@@ -74,7 +74,7 @@ test('should update a corresponding notification service when it does exist', (t
     return []
   }
 
-  app(fakeLibratoClient).createOrUpdate(newAlertsConfig2).catch(t.fail)
+  app(fakeLibratoClient).createOrUpdate(alertsWithUpdatedServices).catch(t.fail)
 })
 
 test('should delete a notification service that is detached', (t) => {
@@ -86,5 +86,5 @@ test('should delete a notification service that is detached', (t) => {
     t.equal(config.length, 1)
   }
 
-  app(fakeLibratoClient).createOrUpdate(newAlertsConfig1).catch(t.fail)
+  app(fakeLibratoClient).createOrUpdate(alertsWithNewServices).catch(t.fail)
 })
