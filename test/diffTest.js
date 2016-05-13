@@ -25,6 +25,21 @@ test('should return updated item', (t) => {
   })
 })
 
+test('should support custom comparator', (t) => {
+  t.plan(1)
+  const existing = [ {title: 'existing', foo: 'bar'} ]
+  const updated = [ {title: 'new', foo: 'bar'} ]
+  const comparator = (a, b) => {
+    return a.title === b.title
+  }
+
+  t.deepEqual(diff(existing, updated, comparator), {
+    created: [ {title: 'new', foo: 'bar'} ],
+    updated: [ ],
+    deleted: [ {title: 'existing', foo: 'bar'} ]
+  })
+})
+
 test('should copy id of the updated item if none exists in a new item', (t) => {
   t.plan(1)
   const existing = [ {name: 'existing', foo: 'bar', id: '1234'} ]

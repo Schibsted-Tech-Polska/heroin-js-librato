@@ -17,6 +17,9 @@ function librato (alertsConfig, servicesConfig) {
     },
     createServices (config) {
       return []
+    },
+    updateServices (config) {
+      return []
     }
   }
 
