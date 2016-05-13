@@ -1,6 +1,7 @@
 const test = require('tape')
 const alertsConfig = [ {
   name: 'myapp.test.alert1',
+  id: 123,
   services: [ {
     type: 'slack',
     settings: {url: 'https://hooks.slack.com/services/xyz'},
@@ -10,6 +11,7 @@ const alertsConfig = [ {
 const updatedAlertsConfig = [
   {
     name: 'myapp.test.alert1',
+    id: 123,
     newField: 'update trigger',
     services: [ {
       type: 'slack',
@@ -52,4 +54,13 @@ test('should trigger 2 modifications when one alerts created and one updated', (
   app.createOrUpdate(updatedAlertsConfig).then(function (message) {
     t.equal(message, 'modified 2 alerts')
   }).catch(t.fail)
+})
+
+test('should filter out internal fields when exporting existing alerts', (t) => {
+  t.plan(2)
+
+  app.export().then(function (exported) {
+    t.equal(exported[0].name, 'myapp.test.alert1')
+    t.equal(exported[0].id, undefined)
+  })
 })

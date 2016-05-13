@@ -1,6 +1,7 @@
+const util = require('util')
 const libratoConfigurator = require('../index').client(process.env.USERNAME, process.env.PASSWORD)
 
-libratoConfigurator.export().then((result) => console.log(result))
+libratoConfigurator.export().then((result) => console.log(util.inspect(result, { depth: 5 })))
 
 // libratoConfigurator.deleteAllAlerts().then((result) => console.log(result))
 libratoConfigurator.createOrUpdate(
