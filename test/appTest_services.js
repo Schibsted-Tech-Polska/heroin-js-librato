@@ -1,9 +1,5 @@
 const test = require('tape')
 
-const existingAlertsConfig = [ {
-  name: 'myapp.test.alert1',
-  id: 123
-} ]
 const existingServicesConfig = [ {
   id: 567,
   type: 'campfire',
@@ -13,6 +9,11 @@ const existingServicesConfig = [ {
     subdomain: 'acme'
   },
   title: 'Camfire notification'
+} ]
+const existingAlertsConfig = [ {
+  name: 'myapp.test.alert1',
+  id: 123,
+  services: existingServicesConfig
 } ]
 const newServicesConfig = [ {
   type: 'slack',
@@ -74,4 +75,16 @@ test('should update a corresponding notification service when it does exist', (t
   }
 
   app(fakeLibratoClient).createOrUpdate(newAlertsConfig2).catch(t.fail)
+})
+
+test('should delete a notification service that is detached', (t) => {
+  t.plan(1)
+
+  var fakeLibratoClient = require('./fakeLibratoClient')(existingAlertsConfig, existingServicesConfig)
+
+  fakeLibratoClient.deleteServices = function (config) {
+    t.equal(config.length, 1)
+  }
+
+  app(fakeLibratoClient).createOrUpdate(newAlertsConfig1).catch(t.fail)
 })

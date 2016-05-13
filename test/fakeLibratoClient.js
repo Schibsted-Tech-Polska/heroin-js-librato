@@ -20,6 +20,9 @@ function librato (alertsConfig, servicesConfig) {
     },
     updateServices (config) {
       return []
+    },
+    deleteServices (config) {
+      return []
     }
   }
 
