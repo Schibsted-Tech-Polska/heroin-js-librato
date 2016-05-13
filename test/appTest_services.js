@@ -19,6 +19,15 @@ const newServicesConfig = [ {
   settings: {url: 'https://hooks.slack.com/services/xyz'},
   title: 'Slack notification'
 } ]
+const updatedServicesConfig = [ {
+  type: 'campfire',
+  settings: {
+    room: 'Ops',
+    token: '1234',
+    subdomain: 'acme1'
+  },
+  title: 'Camfire notification'
+} ]
 const newAlertsConfig1 = [ {
   name: 'myapp.test.alert1',
   id: 123,
@@ -27,7 +36,7 @@ const newAlertsConfig1 = [ {
 const newAlertsConfig2 = [ {
   name: 'myapp.test.alert1',
   id: 123,
-  services: existingServicesConfig
+  services: updatedServicesConfig
 } ]
 
 function app (librato) {
@@ -39,7 +48,7 @@ test('should create a corresponding notification service when it does not exist'
 
   var fakeLibratoClient = require('./fakeLibratoClient')(existingAlertsConfig, existingServicesConfig)
   fakeLibratoClient.createServices = function (config) {
-    t.ok(config, 'create services invoked')
+    t.equal(config.length, 1)
     return []
   }
   fakeLibratoClient.updateServices = function (config) {
@@ -60,7 +69,7 @@ test('should update a corresponding notification service when it does exist', (t
     return []
   }
   fakeLibratoClient.updateServices = function (config) {
-    t.ok(config, 'update services invoked')
+    t.equal(config.length, 1)
     return []
   }
 
