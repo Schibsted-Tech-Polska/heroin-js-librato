@@ -1,28 +1,43 @@
-function librato (alertsConfig, servicesConfig) {
+'use strict'
+var _ = require('lodash')
+
+function empty (array) {
+  return array.map(() => Promise.resolve())
+}
+
+function librato (alerts, services) {
+  let alertsConfig = _.cloneDeep(alerts)
+  let servicesConfig = _.cloneDeep(services)
+
   const api = {
     fetchAllAlerts () {
       return Promise.resolve({body: JSON.stringify({alerts: alertsConfig})})
     },
     createAlerts (alerts) {
-      return alerts.map((alert) => Promise.resolve())
+      return empty(alerts)
     },
     updateAlerts (alerts) {
-      return alerts.map((alert) => Promise.resolve())
+      return empty(alerts)
     },
     deleteAlerts (alerts) {
-      return []
+      return empty(alerts)
     },
     fetchAllServices () {
       return Promise.resolve({body: JSON.stringify({services: servicesConfig})})
     },
-    createServices (config) {
-      return []
+    createServices (services) {
+      let startId = 1000
+      return services.map((service) => {
+        service.id = startId
+        startId++
+        return Promise.resolve(service)
+      })
     },
-    updateServices (config) {
-      return []
+    updateServices (services) {
+      return empty(services)
     },
-    deleteServices (config) {
-      return []
+    deleteServices (services) {
+      return empty(services)
     }
   }
 

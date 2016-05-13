@@ -88,3 +88,27 @@ test('should delete a notification service that is detached', (t) => {
 
   app(fakeLibratoClient).createOrUpdate(alertsWithNewServices).catch(t.fail)
 })
+
+test('should pass service ids when updating alerts', (t) => {
+  t.plan(1)
+
+  var fakeLibratoClient = require('./fakeLibratoClient')(existingAlertsConfig, existingServicesConfig)
+  fakeLibratoClient.updateAlerts = function (alerts) {
+    t.deepEqual(alerts[0].services, [ 567 ])
+    return alerts.map((alert) => Promise.resolve())
+  }
+
+  app(fakeLibratoClient).createOrUpdate(alertsWithUpdatedServices).catch(t.fail)
+})
+
+test('should pass service ids when creating new alerts', (t) => {
+  t.plan(1)
+
+  var fakeLibratoClient = require('./fakeLibratoClient')(existingAlertsConfig, existingServicesConfig)
+  fakeLibratoClient.updateAlerts = function (alerts) {
+    t.deepEqual(alerts[0].services, [ 1000 ])
+    return alerts.map((alert) => Promise.resolve())
+  }
+
+  app(fakeLibratoClient).createOrUpdate(alertsWithNewServices).catch(t.fail)
+})

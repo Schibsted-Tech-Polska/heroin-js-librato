@@ -1,24 +1,9 @@
 const test = require('tape')
-const slackConfig = {
-  type: 'slack',
-  settings: {url: 'https://hooks.slack.com/services/xyz'},
-  title: 'Slack notification'
-}
 const alertsConfig = [ {
   name: 'myapp.test.alert1',
-  id: 123,
-  services: [ slackConfig ]
+  id: 123
 } ]
-const servicesConfig = [ {
-  id: 567,
-  type: 'campfire',
-  settings: {
-    room: 'Ops',
-    token: '1234',
-    subdomain: 'acme'
-  },
-  title: 'Camfire notification'
-} ]
+const servicesConfig = [ ]
 
 const updatedAlertsConfig = [
   {
