@@ -26,11 +26,12 @@ function librato (alerts, services) {
       return Promise.resolve({body: JSON.stringify({services: servicesConfig})})
     },
     createServices (services) {
+      let servicesConfig = _.cloneDeep(services)
       let startId = 1000
-      return services.map((service) => {
+      return servicesConfig.map((service) => {
         service.id = startId
         startId++
-        return Promise.resolve(service)
+        return Promise.resolve({body: JSON.stringify(service)})
       })
     },
     updateServices (services) {

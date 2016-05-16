@@ -15,6 +15,10 @@ const existingAlertsConfig = [ {
   id: 123,
   services: existingServicesConfig
 } ]
+const existingAlertsConfigWithoutServices = [ {
+  name: 'myapp.test.alert1',
+  id: 123
+} ]
 const newServicesConfig = [ {
   type: 'slack',
   settings: {url: 'https://hooks.slack.com/services/xyz'},
@@ -48,12 +52,13 @@ test('should create a corresponding notification service when it does not exist'
   t.plan(2)
 
   var fakeLibratoClient = require('./fakeLibratoClient')(existingAlertsConfig, existingServicesConfig)
+  var originalCall = fakeLibratoClient.createServices
   fakeLibratoClient.createServices = function (config) {
-    t.equal(config.length, 1)
-    return []
+    t.equal(config.length, 1, 'one service created')
+    return originalCall(config)
   }
   fakeLibratoClient.updateServices = function (config) {
-    t.deepEqual(config, [])
+    t.deepEqual(config, [], 'no services updated')
     return []
   }
 
@@ -66,11 +71,11 @@ test('should update a corresponding notification service when it does exist', (t
   var fakeLibratoClient = require('./fakeLibratoClient')(existingAlertsConfig, existingServicesConfig)
 
   fakeLibratoClient.createServices = function (config) {
-    t.deepEqual(config, [])
+    t.deepEqual(config, [], 'no services created')
     return []
   }
   fakeLibratoClient.updateServices = function (config) {
-    t.equal(config.length, 1)
+    t.equal(config.length, 1, 'one service updated')
     return []
   }
 
@@ -101,10 +106,22 @@ test('should pass service ids when updating alerts', (t) => {
   app(fakeLibratoClient).createOrUpdate(alertsWithUpdatedServices).catch(t.fail)
 })
 
-test('should pass service ids when creating new alerts', (t) => {
+test('should pass service ids when updating alerts', (t) => {
   t.plan(1)
 
   var fakeLibratoClient = require('./fakeLibratoClient')(existingAlertsConfig, existingServicesConfig)
+  fakeLibratoClient.updateAlerts = function (alerts) {
+    t.deepEqual(alerts[0].services, [ 1000 ])
+    return alerts.map((alert) => Promise.resolve())
+  }
+
+  app(fakeLibratoClient).createOrUpdate(alertsWithNewServices).catch(t.fail)
+})
+
+test('should pass service ids when updating alerts with no previous services', (t) => {
+  t.plan(1)
+
+  var fakeLibratoClient = require('./fakeLibratoClient')(existingAlertsConfigWithoutServices, [])
   fakeLibratoClient.updateAlerts = function (alerts) {
     t.deepEqual(alerts[0].services, [ 1000 ])
     return alerts.map((alert) => Promise.resolve())
