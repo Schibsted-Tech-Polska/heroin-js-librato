@@ -33,6 +33,14 @@ test('should ignore alert update when no changes', (t) => {
   }).catch(t.fail)
 })
 
+test('should ignore alert update when empty config', (t) => {
+  t.plan(1)
+
+  app().createOrUpdate().then(function (message) {
+    t.equal(message, 'modified 0 alerts')
+  }).catch(t.fail)
+})
+
 test('should trigger 2 modifications when one alerts created and one updated', (t) => {
   t.plan(1)
 
