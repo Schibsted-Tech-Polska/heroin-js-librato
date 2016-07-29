@@ -1,6 +1,6 @@
 HeroIn plugin for Librato
 -------
-[![Build Status](https://travis.schibsted.io/snt/heroin-js-librato.svg?token=rZVkndZyUmroq3r7Jeyx)](https://travis.schibsted.io/snt/heroin-js-librato)
+[![Build Status](https://travis-ci.org/Schibsted-Tech-Polska/heroin-js-librato.svg?branch=master)](https://travis-ci.org/Schibsted-Tech-Polska/heroin-js-librato)
 
 Adding addon to HeroIn
 ------
