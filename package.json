@@ -11,12 +11,16 @@
   "author": "Mateusz Kwasniewski <mateusz.kwasniewski@schibsted.pl>",
   "license": "MIT",
   "dependencies": {
-    "good-guy-http": "1.7.1",
+    "good-guy-http": "1.12.2",
     "is-subset": "0.1.1",
-    "lodash": "4.11.1"
+    "lodash": "4.17.11"
   },
   "devDependencies": {
     "standard": "6.0.8",
     "tape": "4.5.1"
+  },
+  "engines": {
+    "node": ">=8",
+    "npm": ">=6"
   }
 }
