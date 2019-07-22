@@ -1,6 +1,6 @@
 {
   "name": "heroin-js-librato",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Librato config as code",
   "main": "index.js",
   "scripts": {
