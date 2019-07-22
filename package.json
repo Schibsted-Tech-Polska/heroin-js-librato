@@ -13,7 +13,7 @@
   "dependencies": {
     "good-guy-http": "1.12.2",
     "is-subset": "0.1.1",
-    "lodash": "4.17.11"
+    "lodash": "^4.17.15"
   },
   "devDependencies": {
     "standard": "6.0.8",
